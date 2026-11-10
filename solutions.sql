@@ -74,14 +74,17 @@ INNER JOIN film_category AS fc
 	ON f.film_id = fc.film_id
 INNER JOIN category AS c
 	ON fc.category_id = c.category_id
-GROUP BY c.name;
+GROUP BY c.name
+ORDER BY total_sales DESC
+LIMIT 5;
 
 --7. Is "Academy Dinosaur" available for rent from Store 1?
 SELECT
-	'Is Academy Dinosaur available at store 1?' AS search
-	, CASE WHEN COUNT(i.store_id) = 0 THEN 'No' ELSE 'Yes' END is_available
+	COUNT(r.rental_id) AS available_rentals
 FROM film f
 INNER JOIN inventory i
 	ON f.film_id = i.film_id
+LEFT JOIN rental r
+	ON i.inventory_id = r.inventory_id
 WHERE i.store_id = 1
 	AND f.title = "Academy Dinosaur";
