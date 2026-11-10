@@ -80,7 +80,7 @@ LIMIT 5;
 
 --7. Is "Academy Dinosaur" available for rent from Store 1?
 SELECT
-	COUNT(r.rental_id) AS available_rentals
+	COUNT(i.inventory_id)-COUNT(r.rental_id) AS available_inventory
 FROM film f
 INNER JOIN inventory i
 	ON f.film_id = i.film_id
